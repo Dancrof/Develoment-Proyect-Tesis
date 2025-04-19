@@ -5,7 +5,14 @@
         <title>Faveo | HELP DESK</title>
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
         <!-- faveo favicon -->
-        <link href="{{asset("lb-faveo/media/images/favicon.ico")}}" rel="shortcut icon">
+        @php
+            $company = App\Model\helpdesk\Settings\Company::where('id', '=', '1')->first();
+        @endphp
+        @if($company && $company->favicon)
+            <link href="{{asset('uploads/company/'.$company->favicon)}}" rel="shortcut icon">
+        @else
+            <link href="{{asset("lb-faveo/media/images/favicon.ico")}}" rel="shortcut icon">
+        @endif
                <!-- Bootstrap 4.3.1 -->
 {{--        <link href="{{asset("lb-faveo/css/bootstrap4.min.css")}}" rel="stylesheet" type="text/css" />--}}
 
@@ -60,7 +67,25 @@
 
             .noti_User { color: #6c757d !important; }
 
-            .brand-image{float: none !important; margin-left: 0 !important;}
+            .brand-image {
+                float: none !important;
+                margin-left: 0 !important;
+                max-height: 45px !important;
+                display: block !important;
+                margin: 0 auto !important;
+            }
+
+            .brand-link {
+                text-align: center !important;
+                padding: 8px !important;
+                height: auto !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                border-bottom: 1px solid #4b545c !important;
+                background-color: #343a40 !important;
+                margin-bottom: 5px !important;
+            }
 
             .table { display: block;width: 100%;overflow-x: auto; }
 
@@ -334,10 +359,14 @@
                 </ul>
             </nav>
             <!-- Left side column. contains the logo and sidebar -->
-            <aside class="main-sidebar elevation-4 sidebar-dark-orange">
-
-                <a href="http://www.faveohelpdesk.com" class="brand-link navbar-dark" style="text-align: center;">
-                    <img src="{{ asset('lb-faveo/media/images/logo.png')}}" class="brand-image" alt="Company Log0">
+            <aside class="main-sidebar sidebar-dark-primary elevation-4">
+                <!-- Brand Logo -->
+                <a href="{{url('admin')}}" class="brand-link">
+                    @if($company && $company->panel_logo)
+                        <img src="{{asset('uploads/company/'.$company->panel_logo)}}" alt="Panel Logo" class="brand-image">
+                    @else
+                        <img src="{{asset('lb-faveo/media/images/logo.png')}}" alt="Panel Logo" class="brand-image">
+                    @endif
                 </a>
 
                 <!-- sidebar: style can be found in sidebar.less -->

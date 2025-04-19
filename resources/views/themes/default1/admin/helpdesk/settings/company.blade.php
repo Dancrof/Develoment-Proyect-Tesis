@@ -105,58 +105,143 @@ class="nav-link active"
         </div>
 
         <div class="row">
-            <div class="col-md-4">
-                <!-- logo -->
-                {!! Form::label('logo',Lang::get('lang.logo')) !!}
-                <div class="btn bg-olive btn-file" style="color:blue"> {{Lang::get('lang.upload_file')}}
-                    {!! Form::file('logo') !!}
-                </div>
-            </div>
-            <div class="col-md-4">
-                <!-- panel logo -->
-                {!! Form::label('panel_logo', Lang::get('lang.panel_logo')) !!}
-                <div class="btn bg-olive btn-file" style="color:blue"> {{Lang::get('lang.upload_file')}}
-                    {!! Form::file('panel_logo') !!}
-                </div>
-            </div>
-            <div class="col-md-4">
-                <!-- favicon -->
-                {!! Form::label('favicon', Lang::get('lang.favicon')) !!}
-                <div class="btn bg-olive btn-file" style="color:blue"> {{Lang::get('lang.upload_file')}}
-                    {!! Form::file('favicon') !!}
-                </div>
+            <div class="col-12 mb-4">
+                <h4 class="text-primary mb-3">
+                    <i class="fas fa-images"></i> 
+                    Logo And Favicon 
+                    <small class="text-muted">Personaliza la apariencia de tu sistema</small>
+                </h4>
             </div>
         </div>
 
-        <div class="row mt-4">
-            <div class="col-sm-12">
-                <div id="logo-display" style="display: block;">
-                    <div class="row">
-                        @if($companys->logo != null)
-                        <div class="col-sm-2">
-                            {!! Form::checkbox('use_logo') !!} <label> {!! Lang::get('lang.use_logo') !!}</label>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <div class="mb-3">
+                            @if($companys->favicon != null)
+                                <img src="{{asset('uploads/company/'.$companys->favicon)}}" 
+                                     alt="Favicon" 
+                                     id="favicon-preview" 
+                                     class="img-fluid mb-2" 
+                                     style="max-width: 64px; border: 1px solid #ddd; padding: 5px; border-radius: 4px;">
+                            @else
+                                <div class="preview-placeholder">
+                                    <i class="fas fa-star fa-2x text-muted"></i>
+                                </div>
+                            @endif
                         </div>
-                        @endif
-                        <?php $company = App\Model\helpdesk\Settings\Company::where('id', '=', '1')->first(); ?>
-                        @if($companys->logo != null)
-                        <div class="col-md-3 image" data-content="{{Lang::get('lang.click-delete')}}">
-                            <img src="{{asset('uploads/company')}}{{'/'}}{{$company->logo}}" alt="Company Logo" id="company-logo" width="100px" style="border:1px solid #DCD1D1" />
+                        <h5>Favicon</h5>
+                        <p class="text-muted small">Recomendado: 32x32px</p>
+                        <div class="mt-3">
+                            <div class="custom-file">
+                                {!! Form::file('favicon', ['class' => 'custom-file-input', 'id' => 'favicon']) !!}
+                                <label class="btn btn-outline-primary" for="favicon">
+                                    <i class="fas fa-upload"></i> Subir Favicon
+                                </label>
+                            </div>
+                            @if($companys->favicon != null)
+                                <div class="mt-2">
+                                    <label class="d-block">
+                                        {!! Form::checkbox('use_default_favicon') !!} Usar Favicon por defecto
+                                    </label>
+                                </div>
+                            @endif
                         </div>
-                        @endif
-                        @if($companys->panel_logo != null)
-                        <div class="col-md-3 panel-image" data-content="{{Lang::get('lang.click-delete')}}">
-                            <img src="{{asset('uploads/company')}}{{'/'}}{{$company->panel_logo}}" alt="Panel Logo" id="panel-logo" width="100px" style="border:1px solid #DCD1D1" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <div class="mb-3">
+                            @if($companys->panel_logo != null)
+                                <img src="{{asset('uploads/company/'.$companys->panel_logo)}}" 
+                                     alt="Panel Logo" 
+                                     id="panel-logo-preview" 
+                                     class="img-fluid mb-2" 
+                                     style="max-height: 100px; border: 1px solid #ddd; padding: 5px; border-radius: 4px;">
+                            @else
+                                <div class="preview-placeholder">
+                                    <i class="fas fa-image fa-3x text-muted"></i>
+                                </div>
+                            @endif
                         </div>
-                        @endif
-                        @if($companys->favicon != null)
-                        <div class="col-md-3 favicon-image" data-content="{{Lang::get('lang.click-delete')}}">
-                            <img src="{{asset('uploads/company')}}{{'/'}}{{$company->favicon}}" alt="Favicon" id="favicon-img" width="32px" style="border:1px solid #DCD1D1" />
+                        <h5>Admin and Agent Panel Logo</h5>
+                        <p class="text-muted small">Recomendado: 300x100px</p>
+                        <div class="mt-3">
+                            <div class="custom-file">
+                                {!! Form::file('panel_logo', ['class' => 'custom-file-input', 'id' => 'panel_logo']) !!}
+                                <label class="btn btn-outline-primary" for="panel_logo">
+                                    <i class="fas fa-upload"></i> Subir Logo Panel
+                                </label>
+                            </div>
+                            @if($companys->panel_logo != null)
+                                <div class="mt-2">
+                                    <label class="d-block">
+                                        {!! Form::checkbox('use_default_panel_logo') !!} Usar Logo Panel por defecto
+                                    </label>
+                                </div>
+                            @endif
                         </div>
-                        @endif
                     </div>
                 </div>
             </div>
         </div>
+
+        <style>
+            .preview-placeholder {
+                width: 100%;
+                height: 100px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background-color: #f8f9fa;
+                border: 2px dashed #dee2e6;
+                border-radius: 4px;
+                margin-bottom: 1rem;
+            }
+            .custom-file {
+                text-align: center;
+                margin-bottom: 1rem;
+            }
+            .custom-file-input {
+                position: absolute;
+                left: -9999px;
+            }
+            .card {
+                box-shadow: 0 0 10px rgba(0,0,0,0.1);
+                border: none;
+                margin-bottom: 1.5rem;
+            }
+            .card:hover {
+                box-shadow: 0 0 15px rgba(0,0,0,0.15);
+            }
+        </style>
+
+        <script>
+            // Preview de imágenes antes de subir
+            function readURL(input, previewId) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function(e) {
+                        $('#' + previewId).attr('src', e.target.result);
+                    }
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+
+            $(document).ready(function() {
+                $('#favicon').change(function() {
+                    readURL(this, 'favicon-preview');
+                });
+
+                $('#panel_logo').change(function() {
+                    readURL(this, 'panel-logo-preview');
+                });
+            });
+        </script>
     </div>
     <div class="card-footer">
         {!! Form::submit(Lang::get('lang.submit'),['class'=>'btn btn-primary'])!!}
