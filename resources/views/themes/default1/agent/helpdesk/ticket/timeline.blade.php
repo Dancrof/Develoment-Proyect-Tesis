@@ -138,18 +138,17 @@ if ($thread->title != "") {
 
             if ($group->can_edit_ticket == 1) {
                 ?>
-            <button type="button" class="btn btn-sm btn-default btn-tool">
+            <button type="button" class="btn btn-sm btn-default btn-tool" data-toggle="modal" data-target="#Edit">
 
                 <i class="fas fa-edit" style="color:green;"></i> {{trans('lang.edit')}}
 
             </button>            <?php } ?>
 
-            <?php if ($group->can_assign_ticket == 1) { ?>
-            <button type="button" class="btn btn-sm btn-default btn-tool">
-
+            <?php if ($group->can_assign_ticket == 1 && $tickets->assigned_to == null) { ?>
+            <button type="button" class="btn btn-sm btn-default btn-tool" data-toggle="modal" data-target="#assign{{$tickets->id}}">
                 <i class="fas fa-hand-point-right" style="color:orange;"></i> {{trans('lang.assign')}}
-
-            </button>            <?php } ?>
+            </button>            
+            <?php } ?>
 
             @if($tickets->assigned_to == Auth::user()->id)
                 <button type="button" id="surrender_button" class="btn btn-sm btn-default btn-tool" data-toggle="modal" data-target="#surrender">
@@ -1041,7 +1040,7 @@ if ($thread->title != "") {
                     </div>
                     <div id="assign_alert" class="alert alert-success alert-dismissable" style="display:none;">
                         <button id="assign_dismiss" type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                        <h4><i class="icon fa fa-check"></i>Alert!</h4>
+                        <h4><i class="icon fa fa-check"></i>Exito!</h4>
                         <div id="message-success1"></div>
                     </div>
                     <div class="modal-body">
@@ -1580,36 +1579,58 @@ if ($thread->title != "") {
 // Assign a ticket
             $('#form1').on('submit', function() {
     $.ajax({
-    type: "POST",
-            url: "../ticket/assign/{{ $tickets->id }}",
-            dataType: "html",
-            data: $(this).serialize(),
-            beforeSend: function() {
+        type: "POST",
+        url: "../ticket/assign/{{ $tickets->id }}",
+        dataType: "json",
+        data: $(this).serialize(),
+        beforeSend: function() {
             $("#assign_body").hide();
-                    $("#assign_loader").show();
-            },
-            success: function(response) {
-            if (response == 1)
-            {
-            // $("#assign_body").show();
-            // var message = "Success";
-            // $('#message-success1').html(message);
-            // setInterval(function(){$("#alert11").hide(); },4000);   
-            location.reload();
-            var message = "Success!";
-                    $("#alert10").css('display','block');
-                    $('#message-success0').html(message);
-                    setInterval(function(){$("#dismiss10").trigger("click"); }, 2000);
+            $("#assign_loader").show();
+        },
+        success: function(response) {
+            if (response.success) {
+                $("#assign_loader").hide();
+                $("#assign_body").show();
+                $("#dismis4").trigger("click");
+                
+                var message = response.message || "{{Lang::get('lang.ticket_assigned_successfully')}}";
+                $("#alert10").css('display','block');
+                $('#message-success0').html(message);
+                
+                setTimeout(function() {
+                    $("#alert10").css('display','none');
+                    location.reload();
+                }, 2000);
+            } else {
+                $("#assign_loader").hide();
+                $("#assign_body").show();
+                
+                var message = response.message || "{{Lang::get('lang.ticket_assignment_failed')}}";
+                $("#assign_alert").removeClass('alert-success').addClass('alert-danger');
+                $("#assign_alert").show();
+                $('#message-success1').html(message);
+                
+                setTimeout(function() {
+                    $("#assign_alert").hide();
+                }, 3000);
             }
+        },
+        error: function(xhr) {
+            $("#assign_loader").hide();
             $("#assign_body").show();
-                    $("#assign_loader").hide();
-                    $("#dismis4").trigger("click");
-                    // $("#RefreshAssign").load( "../thread/{{$tickets->id}} #RefreshAssign");
-                    // $("#General").load( "../thread/{{$tickets->id}} #General");
-            }
-    })
-            return false;
+            
+            var message = "{{Lang::get('lang.ticket_assignment_failed')}}";
+            $("#assign_alert").removeClass('alert-success').addClass('alert-danger');
+            $("#assign_alert").show();
+            $('#message-success1').html(message);
+            
+            setTimeout(function() {
+                $("#assign_alert").hide();
+            }, 3000);
+        }
     });
+    return false;
+});
             // Change owner of a ticket
             $('#form4').on('submit', function() {
     $.ajax({
