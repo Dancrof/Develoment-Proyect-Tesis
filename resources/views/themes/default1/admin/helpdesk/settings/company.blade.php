@@ -105,14 +105,31 @@ class="nav-link active"
         </div>
 
         <div class="row">
-            <div class="col-md-2">
+            <div class="col-md-4">
                 <!-- logo -->
                 {!! Form::label('logo',Lang::get('lang.logo')) !!}
                 <div class="btn bg-olive btn-file" style="color:blue"> {{Lang::get('lang.upload_file')}}
                     {!! Form::file('logo') !!}
                 </div>
             </div>
-            <div class="col-sm-10">
+            <div class="col-md-4">
+                <!-- panel logo -->
+                {!! Form::label('panel_logo', Lang::get('lang.panel_logo')) !!}
+                <div class="btn bg-olive btn-file" style="color:blue"> {{Lang::get('lang.upload_file')}}
+                    {!! Form::file('panel_logo') !!}
+                </div>
+            </div>
+            <div class="col-md-4">
+                <!-- favicon -->
+                {!! Form::label('favicon', Lang::get('lang.favicon')) !!}
+                <div class="btn bg-olive btn-file" style="color:blue"> {{Lang::get('lang.upload_file')}}
+                    {!! Form::file('favicon') !!}
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-sm-12">
                 <div id="logo-display" style="display: block;">
                     <div class="row">
                         @if($companys->logo != null)
@@ -123,7 +140,17 @@ class="nav-link active"
                         <?php $company = App\Model\helpdesk\Settings\Company::where('id', '=', '1')->first(); ?>
                         @if($companys->logo != null)
                         <div class="col-md-3 image" data-content="{{Lang::get('lang.click-delete')}}">
-                            <img src="{{asset('uploads/company')}}{{'/'}}{{$company->logo}}" alt="User Image" id="company-logo" width="100px" style="border:1px solid #DCD1D1" />
+                            <img src="{{asset('uploads/company')}}{{'/'}}{{$company->logo}}" alt="Company Logo" id="company-logo" width="100px" style="border:1px solid #DCD1D1" />
+                        </div>
+                        @endif
+                        @if($companys->panel_logo != null)
+                        <div class="col-md-3 panel-image" data-content="{{Lang::get('lang.click-delete')}}">
+                            <img src="{{asset('uploads/company')}}{{'/'}}{{$company->panel_logo}}" alt="Panel Logo" id="panel-logo" width="100px" style="border:1px solid #DCD1D1" />
+                        </div>
+                        @endif
+                        @if($companys->favicon != null)
+                        <div class="col-md-3 favicon-image" data-content="{{Lang::get('lang.click-delete')}}">
+                            <img src="{{asset('uploads/company')}}{{'/'}}{{$company->favicon}}" alt="Favicon" id="favicon-img" width="32px" style="border:1px solid #DCD1D1" />
                         </div>
                         @endif
                     </div>
@@ -154,31 +181,40 @@ class="nav-link active"
 </div>
 <script type="text/javascript">
     $(document).ready(function() {
-        $(".image").on("click", function() {
+        $(".image, .panel-image, .favicon-image").on("click", function() {
+            var type = $(this).hasClass('panel-image') ? 'panel' : ($(this).hasClass('favicon-image') ? 'favicon' : 'logo');
             $('#myModal').modal('show');
-            $("#myModalLabel").html("{!! Lang::get('lang.delete-logo') !!}");
-            $(".yes").html("{!! Lang::get('lang.yes') !!}");
+            $("#myModalLabel").html(type === 'panel' ? "{{Lang::get('lang.delete-panel')}}" : 
+                                  type === 'favicon' ? "{{Lang::get('lang.delete-favicon')}}" : 
+                                  "{{Lang::get('lang.delete-logo')}}");
+            $(".yes").html("{{Lang::get('lang.yes')}}");
             $(".no").html("{{Lang::get('lang.cancel')}}");
             $("#custom-alert-body").html("{{Lang::get('lang.confirm')}}");
+            $('.yes').data('type', type);
         });
+
         $('.no,.closemodal').on("click", function() {
             $('#myModal').modal('hide');
         });
-        $('.yes').on('click', function() {
-            var src = $('#company-logo').attr('src').split('/');
-            var file = src[src.length - 1];
 
+        $('.yes').on('click', function() {
+            var type = $(this).data('type');
+            var imgId = type === 'panel' ? '#panel-logo' : (type === 'favicon' ? '#favicon-img' : '#company-logo');
+            var src = $(imgId).attr('src').split('/');
+            var file = src[src.length - 1];
             var path = "uploads/company/" + file;
-            // alert(path); 
+
             $.ajax({
                 type: "GET",
                 url: "{{route('delete.logo')}}",
                 dataType: "html",
-                data: {data1: path},
+                data: {
+                    data1: path,
+                    type: type
+                },
                 success: function(data) {
                     if (data == "true") {
-                        var msg = "Logo deleted succesfully."
-                        $("#logo-display").css("display", "none");
+                        $(imgId).parent().remove();
                         $('#myModal').modal('hide');
                     } else {
                         $('#myModal').modal('hide');

@@ -95,6 +95,8 @@ class SettingsController extends Controller
     {
         /* fetch the values of company request  */
         $companys = $company->whereId('1')->first();
+        
+        // Manejar el logo principal
         if (Input::file('logo')) {
             $name = Input::file('logo')->getClientOriginalName();
             $destinationPath = 'uploads/company/';
@@ -102,13 +104,32 @@ class SettingsController extends Controller
             Input::file('logo')->move($destinationPath, $fileName);
             $companys->logo = $fileName;
         }
+
+        // Manejar el panel logo
+        if (Input::file('panel_logo')) {
+            $name = Input::file('panel_logo')->getClientOriginalName();
+            $destinationPath = 'uploads/company/';
+            $fileName = 'panel_'.rand(0000, 9999).'.'.$name;
+            Input::file('panel_logo')->move($destinationPath, $fileName);
+            $companys->panel_logo = $fileName;
+        }
+
+        // Manejar el favicon
+        if (Input::file('favicon')) {
+            $name = Input::file('favicon')->getClientOriginalName();
+            $destinationPath = 'uploads/company/';
+            $fileName = 'favicon_'.rand(0000, 9999).'.'.$name;
+            Input::file('favicon')->move($destinationPath, $fileName);
+            $companys->favicon = $fileName;
+        }
+
         if ($request->input('use_logo') == null) {
             $companys->use_logo = '0';
         }
 
         /* Check whether function success or not */
         try {
-            $companys->fill($request->except('logo'))->save();
+            $companys->fill($request->except(['logo', 'panel_logo', 'favicon']))->save();
 
             /* redirect to Index page with Success Message */
             return redirect('getcompany')->with('success', Lang::get('lang.company_updated_successfully'));
@@ -126,17 +147,28 @@ class SettingsController extends Controller
     public function deleteLogo()
     {
         $path = $_GET['data1']; //get file path of logo image
+        $type = isset($_GET['type']) ? $_GET['type'] : 'logo';
+        
         if (!unlink($path)) {
             return 'false';
         } else {
             $companys = Company::where('id', '=', 1)->first();
-            $companys->logo = null;
-            $companys->use_logo = '0';
+            
+            switch($type) {
+                case 'panel':
+                    $companys->panel_logo = null;
+                    break;
+                case 'favicon':
+                    $companys->favicon = null;
+                    break;
+                default:
+                    $companys->logo = null;
+                    $companys->use_logo = '0';
+            }
+            
             $companys->save();
-
             return 'true';
         }
-        // return $res;
     }
 
     /**
