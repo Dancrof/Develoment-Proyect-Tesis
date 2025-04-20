@@ -123,13 +123,26 @@ class SettingsController extends Controller
             $companys->favicon = $fileName;
         }
 
+        // Manejar el client logo
+        if (Input::file('client_logo')) {
+            $name = Input::file('client_logo')->getClientOriginalName();
+            $destinationPath = 'uploads/company/';
+            $fileName = 'client_'.rand(0000, 9999).'.'.$name;
+            Input::file('client_logo')->move($destinationPath, $fileName);
+            $companys->client_logo = $fileName;
+        }
+
         if ($request->input('use_logo') == null) {
             $companys->use_logo = '0';
         }
 
+        if ($request->input('use_client_logo') == null) {
+            $companys->use_client_logo = '0';
+        }
+
         /* Check whether function success or not */
         try {
-            $companys->fill($request->except(['logo', 'panel_logo', 'favicon']))->save();
+            $companys->fill($request->except(['logo', 'panel_logo', 'favicon', 'client_logo']))->save();
 
             /* redirect to Index page with Success Message */
             return redirect('getcompany')->with('success', Lang::get('lang.company_updated_successfully'));
@@ -160,6 +173,10 @@ class SettingsController extends Controller
                     break;
                 case 'favicon':
                     $companys->favicon = null;
+                    break;
+                case 'client':
+                    $companys->client_logo = null;
+                    $companys->use_client_logo = '0';
                     break;
                 default:
                     $companys->logo = null;

@@ -114,21 +114,29 @@
                             <?php
                             $company = App\Model\helpdesk\Settings\Company::where('id', '=', '1')->first();
                             $system = App\Model\helpdesk\Settings\System::where('id', '=', '1')->first();
+                            
+                            // Debug info - remove after testing
+                            if(config('app.debug')) {
+                                echo "<!-- Debug:\n";
+                                echo "use_client_logo: " . ($company->use_client_logo ? 'true' : 'false') . "\n";
+                                echo "client_logo: " . ($company->client_logo ?? 'null') . "\n";
+                                echo "-->";
+                            }
                             ?>
                             @if($system->url)
                             <a href="{!! $system->url !!}" rel="home">
                             @else
                             <a href="{{url('/')}}" rel="home">
-                                @endif
-                                @if($company->use_logo == 1)
-                                <img src="{{asset('uploads/company')}}{{'/'}}{{$company->logo}}" alt="User Image" width="200px" height="200px"/>
-                                @else
+                            @endif
+                            @if($company->use_client_logo && $company->client_logo)
+                                <img src="{{asset('uploads/company/'.$company->client_logo)}}" alt="Client Logo" class="img-fluid" style="max-height: 100px;"/>
+                            @else
                                 @if($system->name)
-                                {!! $system->name !!}
+                                    {!! $system->name !!}
                                 @else
-                                <b>SUPPORT</b> CENTER
+                                    <b>SOPORTE TECNICO</b> UTELVT
                                 @endif
-                                @endif
+                            @endif
                             </a>
                         </div>
 

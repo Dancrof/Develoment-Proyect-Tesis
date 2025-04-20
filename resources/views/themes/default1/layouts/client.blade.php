@@ -33,19 +33,26 @@
                 $company = App\Model\helpdesk\Settings\Company::where('id', '=', '1')->first();
 				$system = App\Model\helpdesk\Settings\System::where('id', '=', '1')->first();
 				?>
+                <!-- Debug info -->
+                @if(config('app.debug'))
+                    <!-- 
+                    use_client_logo: {{$company->use_client_logo}}
+                    client_logo: {{$company->client_logo}}
+                    -->
+                @endif
 				@if($system->url)
 					<a href="{!! $system->url !!}" rel="home">
 				@else
 					<a href="{{url('home')}}" rel="home">
 				@endif
-                @if($company->use_logo == 1)
-                	<img src="{{asset('lb-faveo/dist')}}{{'/'}}{{$company->logo}}" alt="User Image" width="200px" height="200px"/>
+                @if($company->use_client_logo && $company->client_logo)
+                    <img src="{{asset('uploads/company/'.$company->client_logo)}}" alt="Client Logo" class="img-fluid" style="max-height: 100px;"/>
                 @else
-                	@if($system->name)
-                		{!! $system->name !!}
-                	@else
-                		<b>SUPPORT</b> CENTER
-                	@endif
+                    @if($system->name)
+                        {!! $system->name !!}
+                    @else
+                        <b>SOPORTE TECNICO</b> UTELVT
+                    @endif
                 @endif
                 </a>
 

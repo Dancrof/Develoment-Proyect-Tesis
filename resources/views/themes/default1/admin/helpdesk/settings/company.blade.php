@@ -201,6 +201,55 @@ class="nav-link active"
                     </div>
                 </div>
             </div>
+
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <div class="mb-3">
+                            @if($companys->client_logo != null)
+                                <img src="{{asset('uploads/company/'.$companys->client_logo)}}" 
+                                     alt="Client Panel Logo" 
+                                     id="client-logo-preview" 
+                                     class="img-fluid mb-2" 
+                                     style="max-height: 100px; border: 1px solid #ddd; padding: 5px; border-radius: 4px;">
+                            @else
+                                <div class="preview-placeholder">
+                                    <i class="fas fa-image fa-3x text-muted"></i>
+                                </div>
+                            @endif
+                        </div>
+                        <h5>Client Panel Logo</h5>
+                        <p class="text-muted small">Recomendado: 300x100px</p>
+                        <div class="mt-3">
+                            <div class="custom-file">
+                                {!! Form::file('client_logo', ['class' => 'custom-file-input', 'id' => 'client_logo']) !!}
+                                <label class="btn btn-outline-primary" for="client_logo">
+                                    <i class="fas fa-upload"></i> Subir Logo Panel Cliente
+                                </label>
+                            </div>
+                            <div class="mt-3 text-left">
+                                <div class="form-group">
+                                    <label class="d-block">
+                                        {!! Form::checkbox('use_client_logo', 1, $companys->use_client_logo) !!}
+                                        <span class="ml-2">Usar logo personalizado en el panel de cliente</span>
+                                    </label>
+                                    <small class="form-text text-muted">
+                                        Si está desactivado, se mostrará el nombre del sistema en lugar del logo
+                                    </small>
+                                </div>
+                                @if($companys->client_logo != null)
+                                    <div class="mt-2">
+                                        <label class="d-block">
+                                            {!! Form::checkbox('use_default_client_logo') !!}
+                                            <span class="ml-2">Usar Logo Panel Cliente por defecto</span>
+                                        </label>
+                                    </div>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <style>
@@ -239,7 +288,14 @@ class="nav-link active"
                 if (input.files && input.files[0]) {
                     var reader = new FileReader();
                     reader.onload = function(e) {
-                        $('#' + previewId).attr('src', e.target.result);
+                        var preview = $('#' + previewId);
+                        if (preview.length === 0) {
+                            // Si no existe el preview, crear uno nuevo
+                            var container = $('#' + input.id).closest('.card-body').find('.mb-3');
+                            container.html('<img src="' + e.target.result + '" id="' + previewId + '" class="img-fluid mb-2" style="max-height: 100px; border: 1px solid #ddd; padding: 5px; border-radius: 4px;">');
+                        } else {
+                            preview.attr('src', e.target.result);
+                        }
                     }
                     reader.readAsDataURL(input.files[0]);
                 }
@@ -252,6 +308,10 @@ class="nav-link active"
 
                 $('#panel_logo').change(function() {
                     readURL(this, 'panel-logo-preview');
+                });
+
+                $('#client_logo').change(function() {
+                    readURL(this, 'client-logo-preview');
                 });
             });
         </script>
