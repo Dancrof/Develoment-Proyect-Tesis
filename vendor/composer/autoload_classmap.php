@@ -29,6 +29,7 @@ return array(
     'AWS\\CRT\\NativeResource' => $vendorDir . '/aws/aws-crt-php/src/AWS/CRT/NativeResource.php',
     'AWS\\CRT\\OptionValue' => $vendorDir . '/aws/aws-crt-php/src/AWS/CRT/Options.php',
     'AWS\\CRT\\Options' => $vendorDir . '/aws/aws-crt-php/src/AWS/CRT/Options.php',
+    'AddPanelLogoFaviconToSettingsCompanyTable' => $baseDir . '/database/migrations/2025_04_19_194908_add_panel_logo_favicon_to_settings_company_table.php',
     'Attribute' => $vendorDir . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
     'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
     'Database\\Seeders\\v_2_0_0\\DatabaseSeeder' => $baseDir . '/database/seeders/v_2_0_0/DatabaseSeeder.php',

@@ -999,6 +999,7 @@ class ComposerStaticInit10c1836cea18dd9470bc2e97275d9d56
         'AWS\\CRT\\NativeResource' => __DIR__ . '/..' . '/aws/aws-crt-php/src/AWS/CRT/NativeResource.php',
         'AWS\\CRT\\OptionValue' => __DIR__ . '/..' . '/aws/aws-crt-php/src/AWS/CRT/Options.php',
         'AWS\\CRT\\Options' => __DIR__ . '/..' . '/aws/aws-crt-php/src/AWS/CRT/Options.php',
+        'AddPanelLogoFaviconToSettingsCompanyTable' => __DIR__ . '/../..' . '/database/migrations/2025_04_19_194908_add_panel_logo_favicon_to_settings_company_table.php',
         'Attribute' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
         'Database\\Seeders\\v_2_0_0\\DatabaseSeeder' => __DIR__ . '/../..' . '/database/seeders/v_2_0_0/DatabaseSeeder.php',

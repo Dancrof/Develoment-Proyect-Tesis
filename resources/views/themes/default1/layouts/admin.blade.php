@@ -36,7 +36,13 @@
         <div class="wrapper">
 
             <header class="main-header">
-                <a href="../../index2.html" class="logo"><b>Faveo </b>HELPDESK</a>
+                <a href="{{url('/')}}" class="logo">
+                    @if($company && $company->panel_logo)
+                        <img src="{{asset('uploads/company/'.$company->panel_logo)}}" alt="Panel Logo" style="max-height: 45px; display: block; margin: 0 auto;">
+                    @else
+                        <b>Faveo </b>HELPDESK
+                    @endif
+                </a>
                 <!-- Header Navbar: style can be found in header.less -->
                 <nav class="navbar navbar-static-top" role="navigation">
                     <!-- Sidebar toggle button-->

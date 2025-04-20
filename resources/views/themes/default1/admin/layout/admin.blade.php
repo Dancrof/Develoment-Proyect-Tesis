@@ -73,6 +73,7 @@
                 max-height: 45px !important;
                 display: block !important;
                 margin: 0 auto !important;
+                width: auto !important;
             }
 
             .brand-link {
@@ -361,7 +362,7 @@
             <!-- Left side column. contains the logo and sidebar -->
             <aside class="main-sidebar sidebar-dark-primary elevation-4">
                 <!-- Brand Logo -->
-                <a href="{{url('admin')}}" class="brand-link">
+                <a href="{{url('/')}}" class="brand-link">
                     @if($company && $company->panel_logo)
                         <img src="{{asset('uploads/company/'.$company->panel_logo)}}" alt="Panel Logo" class="brand-image">
                     @else
@@ -808,7 +809,7 @@
 
         <script src="{{asset("lb-faveo/js/jquery.rating.pack.js")}}" type="text/javascript"></script>
 
-        <script src="{{asset("lb-faveo/plugins/select2/select2.full.3.2.0.min.css.js")}}" type="text/javascript"></script>
+        <script src="{{asset("lb-faveo/plugins/select2/select2.full.3.2.0.css.js")}}" type="text/javascript"></script>
 
         <script src="{{asset("lb-faveo/plugins/moment/moment.3.2.0.js")}}" type="text/javascript"></script>
 

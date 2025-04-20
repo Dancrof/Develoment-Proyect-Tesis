@@ -119,43 +119,6 @@ class="nav-link active"
                 <div class="card">
                     <div class="card-body text-center">
                         <div class="mb-3">
-                            @if($companys->favicon != null)
-                                <img src="{{asset('uploads/company/'.$companys->favicon)}}" 
-                                     alt="Favicon" 
-                                     id="favicon-preview" 
-                                     class="img-fluid mb-2" 
-                                     style="max-width: 64px; border: 1px solid #ddd; padding: 5px; border-radius: 4px;">
-                            @else
-                                <div class="preview-placeholder">
-                                    <i class="fas fa-star fa-2x text-muted"></i>
-                                </div>
-                            @endif
-                        </div>
-                        <h5>Favicon</h5>
-                        <p class="text-muted small">Recomendado: 32x32px</p>
-                        <div class="mt-3">
-                            <div class="custom-file">
-                                {!! Form::file('favicon', ['class' => 'custom-file-input', 'id' => 'favicon']) !!}
-                                <label class="btn btn-outline-primary" for="favicon">
-                                    <i class="fas fa-upload"></i> Subir Favicon
-                                </label>
-                            </div>
-                            @if($companys->favicon != null)
-                                <div class="mt-2">
-                                    <label class="d-block">
-                                        {!! Form::checkbox('use_default_favicon') !!} Usar Favicon por defecto
-                                    </label>
-                                </div>
-                            @endif
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-body text-center">
-                        <div class="mb-3">
                             @if($companys->panel_logo != null)
                                 <img src="{{asset('uploads/company/'.$companys->panel_logo)}}" 
                                      alt="Panel Logo" 
@@ -177,10 +140,60 @@ class="nav-link active"
                                     <i class="fas fa-upload"></i> Subir Logo Panel
                                 </label>
                             </div>
-                            @if($companys->panel_logo != null)
+                            <div class="mt-3 text-left">
+                                <div class="form-group">
+                                    <label class="d-block">
+                                        {!! Form::checkbox('use_logo_instead_name', 1, $companys->use_logo_instead_name) !!}
+                                        <span class="ml-2">Usar logo en lugar del nombre de la compañía</span>
+                                    </label>
+                                    <small class="form-text text-muted">
+                                        Si está activado, el logo se mostrará en lugar del nombre en el encabezado
+                                    </small>
+                                </div>
+                                @if($companys->panel_logo != null)
+                                    <div class="mt-2">
+                                        <label class="d-block">
+                                            {!! Form::checkbox('use_default_panel_logo') !!}
+                                            <span class="ml-2">Usar Logo Panel por defecto</span>
+                                        </label>
+                                    </div>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <div class="mb-3">
+                            @if($companys->favicon != null)
+                                <img src="{{asset('uploads/company/'.$companys->favicon)}}" 
+                                     alt="Favicon" 
+                                     id="favicon-preview" 
+                                     class="img-fluid mb-2" 
+                                     style="max-width: 64px; border: 1px solid #ddd; padding: 5px; border-radius: 4px;">
+                            @else
+                                <div class="preview-placeholder" style="height: 64px;">
+                                    <i class="fas fa-star fa-2x text-muted"></i>
+                                </div>
+                            @endif
+                        </div>
+                        <h5>Favicon</h5>
+                        <p class="text-muted small">Recomendado: 32x32px</p>
+                        <div class="mt-3">
+                            <div class="custom-file">
+                                {!! Form::file('favicon', ['class' => 'custom-file-input', 'id' => 'favicon']) !!}
+                                <label class="btn btn-outline-primary" for="favicon">
+                                    <i class="fas fa-upload"></i> Subir Favicon
+                                </label>
+                            </div>
+                            @if($companys->favicon != null)
                                 <div class="mt-2">
                                     <label class="d-block">
-                                        {!! Form::checkbox('use_default_panel_logo') !!} Usar Logo Panel por defecto
+                                        {!! Form::checkbox('use_default_favicon') !!}
+                                        <span class="ml-2">Usar Favicon por defecto</span>
                                     </label>
                                 </div>
                             @endif

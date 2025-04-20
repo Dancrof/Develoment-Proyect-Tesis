@@ -35,7 +35,7 @@ class AgentLayout
      */
     public function __construct(Company $company, User $users, Tickets $tickets, Department $department, Emails $emails, CommonSettings $common_settings)
     {
-        $this->company = $company;
+        $this->company = $company->where('id', '=', '1')->first();
         $this->auth = Auth::user();
         $this->users = $users;
         $this->tickets = $tickets;

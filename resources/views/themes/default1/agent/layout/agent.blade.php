@@ -368,11 +368,46 @@
             </nav>
 
             <!-- Left side column. contains the logo and sidebar -->
-            <aside class="main-sidebar elevation-4 sidebar-dark-black">
-
-                <a href="http://www.faveohelpdesk.com" class="brand-link " style="text-align: center;">
-                    <img src="{{ asset('lb-faveo/media/images/logo.png')}}" class="brand-image" alt="Company Log0">
+            <aside class="main-sidebar sidebar-dark-primary elevation-4">
+                <!-- Brand Logo -->
+                @php
+                    if(isset($company)) {
+                        \Log::info('Company variable exists in agent layout');
+                        \Log::info('Company panel_logo: ' . ($company->panel_logo ?? 'null'));
+                    } else {
+                        \Log::info('Company variable does not exist in agent layout');
+                    }
+                @endphp
+                <a href="{{url('/')}}" class="brand-link">
+                    @if($company && $company->panel_logo)
+                        <img src="{{asset('uploads/company/'.$company->panel_logo)}}" alt="Panel Logo" class="brand-image">
+                    @else
+                        <img src="{{asset('lb-faveo/media/images/logo.png')}}" alt="Panel Logo" class="brand-image">
+                    @endif
                 </a>
+
+                <style>
+                    .brand-image {
+                        float: none !important;
+                        margin-left: 0 !important;
+                        max-height: 45px !important;
+                        display: block !important;
+                        margin: 0 auto !important;
+                        width: auto !important;
+                    }
+
+                    .brand-link {
+                        text-align: center !important;
+                        padding: 8px !important;
+                        height: auto !important;
+                        display: flex !important;
+                        align-items: center !important;
+                        justify-content: center !important;
+                        border-bottom: 1px solid #4b545c !important;
+                        background-color: #343a40 !important;
+                        margin-bottom: 5px !important;
+                    }
+                </style>
 
                 <div class="sidebar">
         

@@ -25,6 +25,7 @@ class ComposerServiceProvider extends ServiceProvider
                 'themes.default1.agent.helpdesk.dashboard.dashboard',
                 'themes.default1.admin.layout.admin',
                 'themes.default1.admin.helpdesk.setting',
+                'themes.default1.layouts.admin',
                 $service_desk,
             ],
             \App\Http\ViewComposers\AgentLayout::class
