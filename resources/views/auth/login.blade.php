@@ -93,9 +93,9 @@
                 <div class="form-border">
 
                     <div align="center">
-
-                        <h4 style="background-color: #0084b4;"> <a href="http://www.faveohelpdesk.com" class="logo">
-                            <img src="{{ asset('lb-faveo/media/images/logo.png')}}" width="100px;"></a>
+                        <h4 style="background-color: #009ABB; padding: 10px;"> 
+                            <?php $system = App\Model\helpdesk\Settings\System::where('id', '=', '1')->first(); ?>
+                            <span style="color: white; font-size: 24px;">{{ $system->name }}</span>
                         </h4>
                     </div>
 
