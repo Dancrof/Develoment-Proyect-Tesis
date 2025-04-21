@@ -108,8 +108,8 @@ class="nav-link active"
             <div class="col-12 mb-4">
                 <h4 class="text-primary mb-3">
                     <i class="fas fa-images"></i> 
-                    Logo And Favicon 
-                    <small class="text-muted">Personaliza la apariencia de tu sistema</small>
+                    {!! Lang::get('lang.logo_and_favicon') !!}
+                    <small class="text-muted">{!! Lang::get('lang.customize_system_appearance') !!}</small>
                 </h4>
             </div>
         </div>
@@ -131,30 +131,30 @@ class="nav-link active"
                                 </div>
                             @endif
                         </div>
-                        <h5>Admin and Agent Panel Logo</h5>
-                        <p class="text-muted small">Recomendado: 300x100px</p>
+                        <h5>{!! Lang::get('lang.admin_agent_panel_logo') !!}</h5>
+                        <p class="text-muted small">{!! Lang::get('lang.recommended') !!}: 300x100px</p>
                         <div class="mt-3">
                             <div class="custom-file">
                                 {!! Form::file('panel_logo', ['class' => 'custom-file-input', 'id' => 'panel_logo']) !!}
                                 <label class="btn btn-outline-primary" for="panel_logo">
-                                    <i class="fas fa-upload"></i> Subir Logo Panel
+                                    <i class="fas fa-upload"></i> {!! Lang::get('lang.upload_panel_logo') !!}
                                 </label>
                             </div>
                             <div class="mt-3 text-left">
                                 <div class="form-group">
                                     <label class="d-block">
                                         {!! Form::checkbox('use_logo_instead_name', 1, $companys->use_logo_instead_name) !!}
-                                        <span class="ml-2">Usar logo en lugar del nombre de la compañía</span>
+                                        <span class="ml-2">{!! Lang::get('lang.use_logo_instead_name') !!}</span>
                                     </label>
                                     <small class="form-text text-muted">
-                                        Si está activado, el logo se mostrará en lugar del nombre en el encabezado
+                                        {!! Lang::get('lang.logo_header_info') !!}
                                     </small>
                                 </div>
                                 @if($companys->panel_logo != null)
                                     <div class="mt-2">
                                         <label class="d-block">
                                             {!! Form::checkbox('use_default_panel_logo') !!}
-                                            <span class="ml-2">Usar Logo Panel por defecto</span>
+                                            <span class="ml-2">{!! Lang::get('lang.use_default_panel_logo') !!}</span>
                                         </label>
                                     </div>
                                 @endif
@@ -180,20 +180,20 @@ class="nav-link active"
                                 </div>
                             @endif
                         </div>
-                        <h5>Favicon</h5>
-                        <p class="text-muted small">Recomendado: 32x32px</p>
+                        <h5>{!! Lang::get('lang.favicon') !!}</h5>
+                        <p class="text-muted small">{!! Lang::get('lang.recommended') !!}: 32x32px</p>
                         <div class="mt-3">
                             <div class="custom-file">
                                 {!! Form::file('favicon', ['class' => 'custom-file-input', 'id' => 'favicon']) !!}
                                 <label class="btn btn-outline-primary" for="favicon">
-                                    <i class="fas fa-upload"></i> Subir Favicon
+                                    <i class="fas fa-upload"></i> {!! Lang::get('lang.upload_favicon') !!}
                                 </label>
                             </div>
                             @if($companys->favicon != null)
                                 <div class="mt-2">
                                     <label class="d-block">
                                         {!! Form::checkbox('use_default_favicon') !!}
-                                        <span class="ml-2">Usar Favicon por defecto</span>
+                                        <span class="ml-2">{!! Lang::get('lang.use_default_favicon') !!}</span>
                                     </label>
                                 </div>
                             @endif
@@ -218,30 +218,30 @@ class="nav-link active"
                                 </div>
                             @endif
                         </div>
-                        <h5>Client Panel Logo</h5>
-                        <p class="text-muted small">Recomendado: 300x100px</p>
+                        <h5>{!! Lang::get('lang.client_panel_logo') !!}</h5>
+                        <p class="text-muted small">{!! Lang::get('lang.recommended') !!}: 300x100px</p>
                         <div class="mt-3">
                             <div class="custom-file">
                                 {!! Form::file('client_logo', ['class' => 'custom-file-input', 'id' => 'client_logo']) !!}
                                 <label class="btn btn-outline-primary" for="client_logo">
-                                    <i class="fas fa-upload"></i> Subir Logo Panel Cliente
+                                    <i class="fas fa-upload"></i> {!! Lang::get('lang.upload_client_logo') !!}
                                 </label>
                             </div>
                             <div class="mt-3 text-left">
                                 <div class="form-group">
                                     <label class="d-block">
                                         {!! Form::checkbox('use_client_logo', 1, $companys->use_client_logo) !!}
-                                        <span class="ml-2">Usar logo personalizado en el panel de cliente</span>
+                                        <span class="ml-2">{!! Lang::get('lang.use_client_logo') !!}</span>
                                     </label>
                                     <small class="form-text text-muted">
-                                        Si está desactivado, se mostrará el nombre del sistema en lugar del logo
+                                        {!! Lang::get('lang.client_logo_info') !!}
                                     </small>
                                 </div>
                                 @if($companys->client_logo != null)
                                     <div class="mt-2">
                                         <label class="d-block">
                                             {!! Form::checkbox('use_default_client_logo') !!}
-                                            <span class="ml-2">Usar Logo Panel Cliente por defecto</span>
+                                            <span class="ml-2">{!! Lang::get('lang.use_default_client_logo') !!}</span>
                                         </label>
                                     </div>
                                 @endif

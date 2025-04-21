@@ -201,9 +201,9 @@
 
                                             <div class="banner-wrapper user-data text-center clearfix" id="profile_dropdown">
 
-                                                <img id="user_avatar" src="{{Auth::user()->profile_pic}}"class="avatar" alt="User Image" height="70" width="70"/>
+                                                <img id="user_avatar" src="{{Auth::user()->profile_pic}}"class="avatar" alt="Imagen de Usuario" height="70" width="70"/>
 
-                                                <div><strong>{{trans('lang.hello')}}</strong></div>
+                                                <div><strong>{!! Lang::get('lang.hello') !!}</strong></div>
 
                                                 <p class="banner-title ellipsize_first_name h4">{{Auth::user()->first_name." ".Auth::user()->last_name}}</p>
 
@@ -232,12 +232,10 @@
                                                 <?php if (is_object($errors) && ($errors->first('email') || $errors->first('password'))) : ?>
                                             <a href="#" class="nav-link sfHover" data-bs-toggle="collapse" data-bs-target="#login-form">
                                                 {!! Lang::get('lang.login') !!}
-{{--                                                <i class="sub-indicator fa fa-chevron-circle-down fa-fw text-muted"></i>--}}
                                             </a>
                                             <?php else : ?>
                                             <a href="#" class="nav-link collapsed" data-bs-toggle="collapse" data-bs-target="#login-form">
                                                 {!! Lang::get('lang.login') !!}
-{{--                                                <i class="sub-indicator fa fa-chevron-circle-down fa-fw text-muted"></i>--}}
                                             </a>
                                             <?php endif; ?>
                                         </li>
@@ -300,7 +298,7 @@
                                             <a href="{{url('password/email')}}" style="font-size: .8em" class="pull-left">{!! Lang::get('lang.forgot_password') !!}</a>
                                         </div>
                                         <div class="form-group pull-left">
-                                         <input type="checkbox" name="remember"> {!! Lang::get("lang.remember") !!}
+                                         <input type="checkbox" name="remember"> {!! Lang::get('lang.remember') !!}
                                         </div>
                                     </div>
                                     <div class="col-md-12 text-center">
@@ -309,7 +307,7 @@
                                     </div>
 
                                 <div class="col-md-12 text-center">
-                                     {{Lang::get('lang.or')}}
+                                     {!! Lang::get('lang.or') !!}
                                     <ul class="list-unstyled">
                                         <a href="{{url('auth/register')}}" style="font-size: 1.2em">{!! Lang::get('lang.create_account') !!}</a>
                                     </ul>
