@@ -1,4 +1,8 @@
 @extends('themes.default1.client.layout.logclient')
+@php
+use Illuminate\Support\Str;
+$randomPassword = Str::random(8);
+@endphp
 
 @section('home')
     class = "nav-item active"
@@ -32,6 +36,19 @@
     @endif
 
 <div id="content" class="site-content col-md-12">
+    <div class="text-center mb-4">
+        <h1 class="site-title" style="color: #0084b4; font-size: 28px; margin-bottom: 20px;">
+            SOPORTE TECNICO UTELVT
+        </h1>
+    </div>
+
+    <div class="d-flex justify-content-center mb-4">
+        <div class="search-box" style="width: 80%; max-width: 600px;">
+            <input type="text" class="form-control" placeholder="¿Tiene una pregunta? escriba su búsqueda aquí ..." style="border-radius: 4px;">
+        </div>
+        <button class="btn btn-info ml-2" style="background-color: #00b1b3; border: none;">BUSCAR</button>
+    </div>
+
     <div id="corewidgetbox" class="wid">
         <div id="wbox" class="widgetrow text-center">
         @if(Auth::user())
@@ -42,7 +59,9 @@
                 </a>
             </span>
         @endif
-        <?php $system = App\Model\helpdesk\Settings\System::where('id', '=', '1')->first();            
+        <?php
+        $company = App\Model\helpdesk\Settings\Company::where('id', '=', '1')->first();
+        $system = App\Model\helpdesk\Settings\System::where('id', '=', '1')->first();
         ?>
         @if($system != null) 
             @if($system->status) 
@@ -69,15 +88,24 @@
     </div>
 
     <div class="d-flex justify-content-center">
-        <div class="login-box" style=" width: 490px;">
+        <div class="login-box" style="width: 490px;">
             <div class="form-border">
-                <div align="center">
-                    <h4 style="background-color: #0084b4;">
-                        <a href="http://www.faveohelpdesk.com" class="logo"><img src="{{ asset('lb-faveo/media/images/logo.png')}}" width="100px;" ></a>
-                    </h4>    
+                <div style="text-align: center;">
+                    <div id="logo" class="navbar-brand brand site-logo text-center" style="font-size: 30px;">
+                        <?php
+                        $company = App\Model\helpdesk\Settings\Company::where('id', '=', '1')->first();
+                        $system = App\Model\helpdesk\Settings\System::where('id', '=', '1')->first();
+                        ?>
+                        <a href="{{url('/')}}" rel="home">
+                            <img src="{{asset('uploads/company')}}{{'/'}}{{$company->logo}}" alt="Logo" style="max-width: 200px; height: auto;"/>
+                        </a>
+                    </div>
+                    <div style="background-color: #00A3B5; padding: 10px;">
+                        <h3 style="color: white; margin: 0;">SOPORTE TECNICO UTELVT</h3>
+                    </div>
                 </div>
                
-                <div>
+                <div class="mt-4">
                     <div class="text-center">
                         <h3 class="box-title">{!! Lang::get('lang.registration') !!}</h3>
                     </div>
@@ -108,7 +136,7 @@
                 @endif
 
                 @if($settings->status == '1' || $settings->status == 1)
-                <div class='row'>
+                <div='row'>
                     <div class="col-md-3">
                         <div class="form-group {{ $errors->has('code') ? 'has-error' : '' }}">
                         {!! Form::text('code',null,['placeholder'=>91,'class' => 'form-control']) !!}
@@ -126,17 +154,9 @@
                     {!! Form::hidden('code', null) !!}
                 @endif
 
-                <!-- Password -->
-                <div class="form-group has-feedback {{ $errors->has('password') ? 'has-error' : '' }}" style="display: -webkit-box;">
-                    {!! Form::password('password',['placeholder'=>Lang::get('lang.password'),'class' => 'form-control']) !!}
-                    <span class="fa fa-lock form-control-feedback" style="top: 9px;left: -25px;color: #6c757d;"></span>
-                </div>
-
-                <!-- Confirm password -->
-                <div class="form-group has-feedback {{ $errors->has('password_confirmation') ? 'has-error' : '' }}" style="display: -webkit-box;">
-                    {!! Form::password('password_confirmation',['placeholder'=>Lang::get('lang.password_confirmation'),'class' => 'form-control']) !!}
-                    <span class="fas fa-sign-in-alt form-control-feedback" style="top: 9px;left: -25px;color: #6c757d;"></span>
-                </div>
+                <!-- Se eliminan los campos de contraseña visibles y se usan campos ocultos -->
+                {!! Form::hidden('password', $randomPassword) !!}
+                {!! Form::hidden('password_confirmation', $randomPassword) !!}
                 
                 <div>
                     <button type="submit" class="btn btn-primary btn-block btn-flat" style="width: 100%; hov: #00c0ef; color: #fff">{!! Lang::get('lang.register') !!}</button>
