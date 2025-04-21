@@ -91,17 +91,13 @@ $randomPassword = Str::random(8);
         <div class="login-box" style="width: 490px;">
             <div class="form-border">
                 <div style="text-align: center;">
-                    <div id="logo" class="navbar-brand brand site-logo text-center" style="font-size: 30px;">
-                        <?php
-                        $company = App\Model\helpdesk\Settings\Company::where('id', '=', '1')->first();
-                        $system = App\Model\helpdesk\Settings\System::where('id', '=', '1')->first();
-                        ?>
-                        <a href="{{url('/')}}" rel="home">
-                            <img src="{{asset('uploads/company')}}{{'/'}}{{$company->logo}}" alt="Logo" style="max-width: 200px; height: auto;"/>
-                        </a>
-                    </div>
+                    <?php
+                    $system = App\Model\helpdesk\Settings\System::where('id', '=', '1')->first();
+                    ?>
                     <div style="background-color: #00A3B5; padding: 10px;">
-                        <h3 style="color: white; margin: 0;">SOPORTE TECNICO UTELVT</h3>
+                        <h3 style="color: white; margin: 0;">
+                            {!! $system->name !!}
+                        </h3>
                     </div>
                 </div>
                

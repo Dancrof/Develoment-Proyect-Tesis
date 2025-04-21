@@ -141,15 +141,6 @@ class="nav-link active"
                                 </label>
                             </div>
                             <div class="mt-3 text-left">
-                                <div class="form-group">
-                                    <label class="d-block">
-                                        {!! Form::checkbox('use_logo_instead_name', 1, $companys->use_logo_instead_name) !!}
-                                        <span class="ml-2">{!! Lang::get('lang.use_logo_instead_name') !!}</span>
-                                    </label>
-                                    <small class="form-text text-muted">
-                                        {!! Lang::get('lang.logo_header_info') !!}
-                                    </small>
-                                </div>
                                 @if($companys->panel_logo != null)
                                     <div class="mt-2">
                                         <label class="d-block">
